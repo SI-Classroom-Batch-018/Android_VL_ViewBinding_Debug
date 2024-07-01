@@ -1,8 +1,7 @@
 package com.example.android_vl_viewbinding_debug
 
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -11,10 +10,12 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.android_vl_viewbinding_debug.databinding.ActivityMainBinding
 import com.example.android_vl_viewbinding_debug.databinding.SecondScreenBinding
 
+const val TAG = "BTN_CLICK"
+
 class MainActivity : AppCompatActivity() {
-    private var counter = 0
+    private var counter = 10
     private lateinit var viewBinding: ActivityMainBinding
-    private lateinit var secondvb: SecondScreenBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +34,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewBinding.btCounter.setOnClickListener {
-            counter ++
-            viewBinding.tvCounter.text = counter.toString()
+            counter --
+
+            try {
+                viewBinding.tvCounter.text = (100/counter).toString()
+                Log.i(TAG, "CLICK CLICK counter == $counter")
+            } catch (exeception: Exception) {
+                Log.e(TAG, "NOT ALLOWED $counter")
+                Log.wtf(TAG, "Exception ${exeception.localizedMessage}")
+            }
         }
     }
 }
